@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /privacy-policy/
+
+Sitemap: https://www.intransittech.com/sitemap.xml

